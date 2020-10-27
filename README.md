@@ -13,4 +13,4 @@ Et voilà
 
 ![greenish photo](https://raw.githubusercontent.com/barbudor/CircuitPython_CPX_VirtualPumpkin/main/images/green.png "Greenish photo")
 
-<video controls src="https://raw.githubusercontent.com/barbudor/CircuitPython_CPX_VirtualPumpkin/main/images/video.mp4">a video</video>
+A video [here](https://raw.githubusercontent.com/barbudor/CircuitPython_CPX_VirtualPumpkin/main/images/video.mp4)
