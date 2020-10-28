@@ -10,11 +10,11 @@ import adafruit_thermistor
 import neopixel
 
 #########################
-#-- slide switch to enable/disable running loop
+# -- slide switch to enable/disable running loop
 slide_switch = digitalio.DigitalInOut(board.SLIDE_SWITCH)
 
 #########################
-#-- Audio setup
+# -- Audio setup
 spkren = digitalio.DigitalInOut(board.SPEAKER_ENABLE)
 spkren.switch_to_output()
 spkren.value = 0
@@ -26,18 +26,19 @@ music1 = audioio.WaveFile(open("thriller16k.wav", "rb"))
 music2 = audioio.WaveFile(open("ghostbusters16k.wav", "rb"))
 musics = [music1, music2]
 
-#-- intialise random generator
-temp = adafruit_thermistor.Thermistor(board.TEMPERATURE, 10000, 10000, 25, 3950)
+# -- intialise random generator
+temp = adafruit_thermistor.Thermistor(board.TEMPERATURE,
+                                      10000, 10000, 25, 3950)
 seed = int(math.modf(temp.temperature)[0]*10000000)
 random.seed(seed)
 
 #########################
-#-- Distance sensor
+# -- Distance sensor
 i2c = busio.I2C(board.SCL, board.SDA)
 vl53 = adafruit_vl53l0x.VL53L0X(i2c)
 
 #########################
-#-- neopixels
+# -- neopixels
 pixels = neopixel.NeoPixel(board.NEOPIXEL, 10)
 orange = (255, 75, 0)
 colors = [(0, 0, 0), (255, 0, 0), (255, 255, 0), (0, 255, 0), (0, 255, 255),
@@ -46,8 +47,10 @@ maxbright = 0.7
 pixels.brightness = 0.0
 pixels.fill(orange)
 
+
 #########################
-#-- animation 1
+# -- animation 1
+
 
 def anim1(audioout):
     pixels.fill(orange)
@@ -56,6 +59,7 @@ def anim1(audioout):
         time.sleep(0.15)
         pixels.brightness = 0.0
         time.sleep(0.2)
+
 
 def anim2(audioout):
     pixels.fill(colors[0])
@@ -81,11 +85,13 @@ def anim2(audioout):
         pixels[pix2] = colors[0]
         pixels[pix3] = colors[0]
 
+
 #########################
-#-- Main loop
+# -- Main loop
+
 
 def pumpkin():
-    #-- Wait for trigger
+    # -- Wait for trigger
     print("WAITING TRIGGER")
     distance = 1000000
     while distance > 1000:
@@ -94,14 +100,14 @@ def pumpkin():
         print("Distance: ", distance)
         random.randrange(5)
 
-    #-- Play random laugh
+    # -- Play random laugh
     laugh = random.randrange(len(laughs))
     print("laugh: ", laugh)
     audioout.play(laughs[laugh])
 
     anim1(audioout)
 
-    #-- Play random music
+    # -- Play random music
     music = random.randrange(len(musics))
     print("music: ", music)
     audioout.play(musics[music])
