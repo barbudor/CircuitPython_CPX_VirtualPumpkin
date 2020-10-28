@@ -10,6 +10,10 @@ import adafruit_thermistor
 import neopixel
 
 #########################
+#-- slide switch to enable/disable running loop
+slide_switch = digitalio.DigitalInOut(board.SLIDE_SWITCH)
+
+#########################
 #-- Audio setup
 spkren = digitalio.DigitalInOut(board.SPEAKER_ENABLE)
 spkren.switch_to_output()
@@ -80,33 +84,33 @@ def anim2(audioout):
 #########################
 #-- Main loop
 
-def loop():
-    while True:
-        #-- Wait for trigger
-        print("WAITING TRIGGER")
-        distance = 1000000
-        while distance > 1000:
-            time.sleep(1)
-            distance = vl53.range
-            print("Distance: ", distance)
-            random.randrange(5)
+def pumpkin():
+    #-- Wait for trigger
+    print("WAITING TRIGGER")
+    distance = 1000000
+    while distance > 1000:
+        time.sleep(1)
+        distance = vl53.range
+        print("Distance: ", distance)
+        random.randrange(5)
 
-        #-- Play random laugh
-        laugh = random.randrange(len(laughs))
-        print("laugh: ", laugh)
-        audioout.play(laughs[laugh])
+    #-- Play random laugh
+    laugh = random.randrange(len(laughs))
+    print("laugh: ", laugh)
+    audioout.play(laughs[laugh])
 
-        anim1(audioout)
+    anim1(audioout)
 
-        #-- Play random music
-        music = random.randrange(len(musics))
-        print("music: ", music)
-        audioout.play(musics[music])
+    #-- Play random music
+    music = random.randrange(len(musics))
+    print("music: ", music)
+    audioout.play(musics[music])
 
-        anim2(audioout)
+    anim2(audioout)
 
-        print("completed")
-        time.sleep(10)
+    print("completed")
+    time.sleep(10)
 
 
-loop()
+while slide_switch.value:
+    pumpkin()
